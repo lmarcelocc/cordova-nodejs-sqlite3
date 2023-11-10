@@ -104,9 +104,9 @@ OS             : Mac OS X 13.6.1 x86_64
 ### Installation
 
 
-1. Clone the repo
+1. Clone the repo (or ssh)
    ```sh
-   git clone https://github.com/your_username_/Project-Name.git
+   git clone https://git.gaf.de/MCarvalho/gmm-cordova-12.git
    ```
 2. Add platform
    ```sh
