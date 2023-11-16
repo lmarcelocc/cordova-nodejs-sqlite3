@@ -75,6 +75,8 @@
       "cordova-plugin-ionic-keyboard": {},
       "@red-mobile/nodejs-mobile-cordova": {}
     },
-    "platforms": []
+    "platforms": [
+      "android"
+    ]
   }
 }
