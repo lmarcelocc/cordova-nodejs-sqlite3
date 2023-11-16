@@ -1,35 +1,11 @@
 {
-  "name": "gaf-gmm-nodejs",
+  "name": "nodejs-mobile-sample-project",
   "version": "0.1.0",
-  "license": "Apache-2.0",
-  "description": "Node.js for Mobile Apps",
-  "author": {
-    "name": "GAF"
-  },
-  "main": "server.js",
-  "dependencies": {
-    "@mapbox/mbtiles": "^0.12.1",
-    "bcryptjs": "^2.4.3",
-    "cors": "^2.8.5",
-    "dree": "^2.1.6",
-    "express": "^4.16.3",
-    "express-jwt": "^5.3.1",
-    "express-rate-limit": "^5.0.0",
-    "formidable": "^1.2.1",
-    "jsonwebtoken": "^8.5.1",
-    "node-cipher": "^6.3.3",
-    "path": "^0.12.7",
-    "request": "^2.88.0",
-    "yargs": "^12.0.2"
-  },
+  "description": "Node.js for Mobile Apps sample project",
+  "main": "main.js",
   "scripts": {
-    "start": "nodemon --watch bin --watch lib --watch main.js",
-    "test": "jest --watch --verbose false",
-    "test-nowatch": "jest",
-    "test-debug": "node --inspect-brk node_modules/.bin/jest --runInBand --watch --verbose"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "devDependencies": {
-    "jest": "^24.8.0",
-    "supertest": "^4.0.2"
-  }
+  "author": "Janea Systems Inc.",
+  "license": "MIT"
 }

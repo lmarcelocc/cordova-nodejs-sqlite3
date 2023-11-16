@@ -9,58 +9,71 @@ import { Platform } from '@ionic/angular';
 export class AppComponent {
   constructor(private readonly platform: Platform) {
     this.platform.ready().then(() => {
-      this.startNodeJS('server.js');
+      this.startNodeProject();
     });
   }
 
-  startNodeJS(serverTarget: string): any {
-    console.log('Attempting to start node server: ' + serverTarget);
-      // To disable the stdout/stderr redirection to the Android logcat:
-      // nodejs.start('main.js', startupCallback, { redirectOutputToLogcat: false });
-      nodejs.channel.setListener((msg: any) => {
-        this.channelListener(msg);
-      });
 
-      nodejs.start(serverTarget, (err: any) => {
-        if (err) {
-         console.error(err);
-         return;
-        }
-
-        console.log('started node server: ' + serverTarget);
-      });
-  }
-
-  /**
-   * Nodejs channel listener
-   * Attempts to parse the message as json
-   * Fails silently and logs non json msg
-   * @param msg
-   */
+  // In this example the channel listener handles only two types of messages:
+  // - the 'Reply' object type that is defined in the www/nodejs-project/main.js
+  // - the string type
+  // But any other valid JavaScript type can be handled if desired.
   channelListener(msg: any) {
-    try {
-      console.log(msg);
-      const jsonMessage = JSON.parse(msg);
-      this.handleJsonFromBridge(jsonMessage);
-    } catch (error) {
-      console.log('Error parsing json msg' + error);
-      console.log('[cordova] received:' + msg);
+    if (typeof msg === 'string') {
+      console.log('[cordova] MESSAGE from Node: "' + msg + '"');
+    } else if (typeof msg === 'object') {
+      console.log('[cordova] MESSAGE from Node: "' + msg.reply + '" - In reply to: "' + msg.original + '"');
+    } else {
+      console.log('[cordova] unexpected object type: ' + typeof msg);
     }
-  }
+  };
 
-  /**
-   * Private helper to act on different types of
-   * json messages received from the cordova bridge
-   * @param jsonMessage
-   */
-  private handleJsonFromBridge(jsonMessage: any) {
-    switch (jsonMessage.type) {
-      case 'SERVER_READY':
-        console.log('[cordova] received:' + jsonMessage);
-        break;
-      default:
-        console.log('[cordova] received:' + jsonMessage);
-        break;
+  // Events listener
+  startedEventistener(msg: any) {
+    if (msg) {
+      if (typeof msg === 'string') {
+        console.log('[cordova] "STARTED" event received from Node with a message: "' + msg + '"');
+      } else if (typeof msg === 'object') {
+        // Add your own logic there
+      } else {
+        console.log('[cordova] "unexpected object type: ' + typeof msg);
+      }
+    } else {
+      console.log('[cordova] "STARTED" event received from Node');
     }
-  }
+  };
+
+  // This is the callback passed to 'nodejs.start()' to be notified if the Node.js
+  // engine has started successfully.
+  startupCallback(err: any) {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log ('Node.js Mobile Engine started');
+      // Send a message to the Node.js app. The reply from the Node.js app will be
+      // processed by the message channel listener 'channelListener()`.
+      nodejs.channel.send('Hello from Cordova!');
+
+      // Send a sample event to the Node.js app.
+      nodejs.channel.post('myevent', 'An event from Cordova');
+    }
+  };
+
+  // The entry point to start the Node.js app.
+  startNodeProject() {
+    // Register the callbacks for the message channel and for the events channel
+    // before starting the Node.js engine.
+    nodejs.channel.setListener(this.channelListener);
+    nodejs.channel.on('started', this.startedEventistener);
+
+    // As an alternative to 'nodejs.channel.setListener', the 'nodejs.channel.on'
+    // method can be used:
+    // nodejs.channel.on('message', channelListener);
+
+    // Start the Node.js for Mobile Apps engine, passing the main script filename
+    // and a callback to receive the result of the startup process.
+    nodejs.start('main.js', this.startupCallback);
+    // To disable the stdout/stderr redirection to the Android logcat:
+    // nodejs.start('main.js', startupCallback, { redirectOutputToLogcat: false });
+  };
 }
