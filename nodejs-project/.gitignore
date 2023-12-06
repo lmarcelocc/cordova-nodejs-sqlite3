@@ -1,2 +1,3 @@
-# dependencies
+Tiles/
 node_modules/
+tests/output/*

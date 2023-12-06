@@ -1,19 +1,65 @@
 {
-  "name": "nodejs-mobile-sample-project",
+  "name": "3d-tiles-samples",
   "version": "0.1.0",
-  "description": "Node.js for Mobile Apps sample project",
-  "main": "main.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "license": "Apache-2.0",
+  "description": "Sample tilesets for learning how to use 3D Tiles.",
+  "author": {
+    "name": "GAF"
   },
-  "author": "Janea Systems Inc.",
-  "license": "MIT",
+  "keywords": [
+    "3D Tiles"
+  ],
+  "homepage": "https://github.com/AnalyticalGraphicsInc/3d-tiles-samples",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AnalyticalGraphicsInc/3d-tiles-samples.git"
+  },
+  "bugs": {
+    "url": "https://github.com/AnalyticalGraphicsInc/3d-tiles-samples/issues"
+  },
+  "main": "main.js",
+  "engines": {
+    "node": ">=4.0.0"
+  },
   "dependencies": {
-    "sqlite3": "^5.1.6"
+    "@mapbox/mbtiles": "^0.12.1",
+    "async": "^2.6.1",
+    "bcrypt": "^5.1.1",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "compression": "^1.7.3",
+    "cors": "^2.8.5",
+    "dree": "^2.1.6",
+    "express": "^4.16.3",
+    "express-jwt": "^5.3.1",
+    "express-rate-limit": "^5.0.0",
+    "formidable": "^1.2.1",
+    "jsonwebtoken": "^8.5.1",
+    "key-store": "^1.1.0",
+    "node-cipher": "^6.3.3",
+    "path": "^0.12.7",
+    "request": "^2.88.0",
+    "rimraf": "^2.6.3",
+    "yargs": "^12.0.2"
+  },
+  "scripts": {
+    "start": "nodemon --watch bin --watch lib --watch main.js",
+    "test": "jest --watch --verbose false",
+    "test-nowatch": "jest",
+    "test-debug": "node --inspect-brk node_modules/.bin/jest --runInBand --watch --verbose"
+  },
+  "devDependencies": {
+    "@types/jest": "^24.0.16",
+    "@types/supertest": "^2.0.8",
+    "jest": "^24.8.0",
+    "supertest": "^4.0.2",
+    "ts-jest": "^24.0.2"
   },
   "overrides": {
-    "sqlite3": {
-      "@mapbox/node-pre-gyp": "github:JaneaSystems/mapbox-node-pre-gyp#add-support-for-nodejs-mobile"
+    "@mapbox/mbtiles": {
+      "sqlite3": {
+        "@mapbox/node-pre-gyp": "github:JaneaSystems/mapbox-node-pre-gyp#add-support-for-nodejs-mobile"
+      }
     }
   }
 }

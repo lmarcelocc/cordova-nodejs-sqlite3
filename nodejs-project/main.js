@@ -1,6 +1,33 @@
 // Require the 'cordova-bridge' to enable communications between the
 // Node.js app and the Cordova app.
 const cordova = require('cordova-bridge');
+const sqlite3 = require('sqlite3').verbose();
+
+var db = new sqlite3.Database(':memory:');
+
+db.serialize(function() {
+  db.run("CREATE TABLE lorem (info TEXT)");
+
+  var stmt = db.prepare("INSERT INTO lorem VALUES (?)");
+  for (var i = 0; i < 10; i++) {
+      stmt.run("Ipsum " + i);
+  }
+  stmt.finalize();
+
+  db.all("SELECT rowid AS id, info FROM lorem", function(err, rows) {
+    var result = '';
+    rows.forEach((row) =>
+      result += row.id + ": " + row.info + "\n"
+    );
+    cordova.channel.send(
+      "sqlite3 output:\n" +
+      result
+    )
+  });
+
+});
+
+db.close();
 
 // Send a message to Cordova.
 cordova.channel.send('main.js loaded');
