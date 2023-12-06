@@ -10,5 +10,10 @@
   "license": "MIT",
   "dependencies": {
     "sqlite3": "^5.1.6"
+  },
+  "overrides": {
+    "sqlite3": {
+      "@mapbox/node-pre-gyp": "github:JaneaSystems/mapbox-node-pre-gyp#add-support-for-nodejs-mobile"
+    }
   }
 }

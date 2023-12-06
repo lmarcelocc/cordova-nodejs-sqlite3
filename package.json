@@ -39,7 +39,7 @@
     "@angular/compiler-cli": "^16.0.0",
     "@angular/language-service": "^16.0.0",
     "@ionic/angular-toolkit": "^9.0.0",
-    "@red-mobile/nodejs-mobile-cordova": "github:okhiroyuki/nodejs-mobile-cordova#main",
+    "@red-mobile/nodejs-mobile-cordova": "github:JaneaSystems/redmobile-nodejs-mobile-cordova#fix-mobile-gyp-resolution",
     "@types/jasmine": "~4.3.0",
     "@types/node": "^12.11.1",
     "@typescript-eslint/eslint-plugin": "5.3.0",
